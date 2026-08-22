@@ -1,0 +1,85 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  SUPER_ADMIN
+  ADMIN
+}
+
+enum SubscriptionStatus {
+  TRIAL
+  ACTIVE
+  EXPIRED
+}
+
+model Business {
+  id                 Int                  @id @default(autoincrement())
+  name               String
+  slug               String               @unique
+  phone              String?
+  logoUrl            String?
+  themeColor         String               @default("#8dbbf7")
+  trialEndsAt        DateTime
+  subscriptionStatus SubscriptionStatus   @default(TRIAL)
+  isActive           Boolean              @default(true)
+
+  users              User[]
+  categories         Category[]
+  products           Product[]
+
+  createdAt          DateTime             @default(now())
+  updatedAt          DateTime             @updatedAt
+}
+
+model User {
+  id           Int       @id @default(autoincrement())
+  username     String    @unique
+  passwordHash String
+  role         Role
+
+  businessId   Int?
+  business     Business? @relation(fields: [businessId], references: [id])
+
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+}
+
+model Category {
+  id         Int       @id @default(autoincrement())
+  name       String
+
+  businessId Int
+  business   Business  @relation(fields: [businessId], references: [id], onDelete: Cascade)
+
+  products   Product[]
+
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+}
+
+model Product {
+  id            Int       @id @default(autoincrement())
+  name          String
+  description   String?
+  price         Decimal   @db.Decimal(10,2)
+
+  imageUrl      String?
+  imagePublicId String?
+
+  isVisible     Boolean   @default(true)
+
+  businessId    Int
+  business      Business  @relation(fields: [businessId], references: [id], onDelete: Cascade)
+
+  categoryId    Int
+  category      Category  @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
