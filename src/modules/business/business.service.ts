@@ -300,7 +300,7 @@ export async function getBusinessQr(id: number) {
     }
 
     const menuUrl =
-        `http://localhost:3000/menu/${business.slug}`;
+        `${process.env.FRONTEND_URL}/menu/${business.slug}`;
 
     const qrCode = await QRCode.toDataURL(
         menuUrl,

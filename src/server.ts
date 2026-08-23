@@ -1,4 +1,8 @@
-import "dotenv/config";
+import dotenv from "dotenv";
+
+dotenv.config();
+
+console.log("🔥 ENV TEST:", process.env.FRONTEND_URL);
 
 import app from "./app.js";
 
