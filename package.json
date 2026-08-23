@@ -5,6 +5,7 @@
   "main": "src/server.ts",
   "scripts": {
     "dev": "tsx watch src/server.ts",
+    "start": "tsx src/server.ts",
     "seed": "tsx prisma/seed.ts"
   },
   "keywords": [],
@@ -40,3 +41,4 @@
     "typescript": "^7.0.2"
   }
 }
+
