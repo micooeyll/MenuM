@@ -65,7 +65,7 @@ export async function createBusiness(data: CreateBusinessInput) {
                 themeColor,
                 trialEndsAt: new Date(
                     Date.now() +
-                        14 * 24 * 60 * 60 * 1000
+                    14 * 24 * 60 * 60 * 1000
                 ),
             },
         });
@@ -341,7 +341,7 @@ export async function getMyBusinessQr(
     }
 
     const menuUrl =
-        `http://localhost:3000/menu/${business.slug}`;
+        `${process.env.FRONTEND_URL}/menu/${business.slug}`;
 
     const qrCode = await QRCode.toDataURL(
         menuUrl,
