@@ -32,7 +32,7 @@ model Business {
   users              User[]
   categories         Category[]
   products           Product[]
-
+  currency           String               @default("TRY")
   createdAt          DateTime             @default(now())
   updatedAt          DateTime             @updatedAt
 }

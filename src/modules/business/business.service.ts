@@ -21,6 +21,7 @@ export async function createBusiness(data: CreateBusinessInput) {
         slug,
         phone,
         themeColor,
+        currency,
         adminUsername,
         adminPassword,
     } = data;
@@ -63,6 +64,7 @@ export async function createBusiness(data: CreateBusinessInput) {
                 slug,
                 phone: phone ?? null,
                 themeColor,
+                currency,
                 trialEndsAt: new Date(
                     Date.now() +
                     14 * 24 * 60 * 60 * 1000
@@ -146,6 +148,9 @@ export async function updateBusiness(
 
             ...(data.themeColor !== undefined && {
                 themeColor: data.themeColor,
+            }),
+            ...(data.currency !== undefined && {
+                currency: data.currency,
             }),
 
             ...(data.isActive !== undefined && {
@@ -265,6 +270,10 @@ export async function updateMyBusiness(
 
             ...(data.themeColor !== undefined && {
                 themeColor: data.themeColor,
+            }),
+
+            ...(data.currency !== undefined && {
+                currency: data.currency,
             }),
 
             ...(data.isActive !== undefined && {
